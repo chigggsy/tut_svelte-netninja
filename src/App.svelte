@@ -1,32 +1,26 @@
 <script>
-	let firstName = 'Jimmy';
-	let lastName = 'Hendrix';
-	let beltColor = 'black';
+	let people = [
+		{name: 'Yoshi', beltColour: 'Black', age: 25, id: 1},
+		{name: 'Mario', beltColour: 'Orange', age: 45, id: 2},
+		{name: 'Luigi', beltColour: 'Brown', age: 35, id: 3}
+	]
 
-	$: fullName = `${firstName} ${lastName}`; //Reactive variable
-	$: { // Reactive statement
-		console.log(fullName);
-		console.log(beltColor);
+	const handleDelete = (id) => {
+		people = people.filter((person) => person.id != id)
 	}
-
-	const handleClick = () => {
-		beltColor = 'orange';
-	}
-
-	const handleInput = (e) => {
-		beltColor = e.target.value;
-	}
-
-
 </script>
 
 <main>
-
-	<p>{fullName} — {beltColor} belt</p> 
-	<input type="text" bind:value={firstName}>
-	<input type="text" bind:value={lastName}>
-	<input type="text" bind:value={beltColor}>
-
+	<h1>People</h1>
+	{#each people as person (person.id)}
+		<div class="person">
+			<h4>{person.name}</h4>
+			<p>{person.name} is a {person.beltColour} belt and is {person.age} years old. <p>
+			<button on:click={() => handleDelete(person.id)}>Delete</button>
+		</div>
+		{:else} <!-- Empty state-->
+		<p>This list here is empty 😭</p>  
+	{/each}
 </main>
 
 <style>
@@ -42,6 +36,13 @@
 		text-transform: uppercase;
 		font-size: 4em;
 		font-weight: 100;
+	}
+
+	.person {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		margin-bottom: 2.5rem;
 	}
 
 	@media (min-width: 640px) {
