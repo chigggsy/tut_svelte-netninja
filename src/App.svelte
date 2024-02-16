@@ -1,6 +1,13 @@
 <script>
-	let name = 'Yoshi';
+	let firstName = 'Jimmy';
+	let lastName = 'Hendrix';
 	let beltColor = 'black';
+
+	$: fullName = `${firstName} ${lastName}`; //Reactive variable
+	$: { // Reactive statement
+		console.log(fullName);
+		console.log(beltColor);
+	}
 
 	const handleClick = () => {
 		beltColor = 'orange';
@@ -10,14 +17,16 @@
 		beltColor = e.target.value;
 	}
 
+
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p style="color: {beltColor};">{beltColor} belt</p>
-	<!-- <input type="text" on:input={handleInput} value={beltColor}> -->
+
+	<p>{fullName} — {beltColor} belt</p> 
+	<input type="text" bind:value={firstName}>
+	<input type="text" bind:value={lastName}>
 	<input type="text" bind:value={beltColor}>
-	<button on:click={handleClick}>Update Belt Colour</button>
+
 </main>
 
 <style>
